@@ -1,0 +1,99 @@
+# ===================================================
+# Kubernetes Deployment - Spring Boot App
+# ===================================================
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecommerce-app
+  labels:
+    app: ecommerce-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ecommerce-app
+  template:
+    metadata:
+      labels:
+        app: ecommerce-app
+    spec:
+      containers:
+        - name: ecommerce-app
+          image: ecommerce-app:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 9090
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://mysql-service:3306/ecommerce?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+            - name: SPRING_DATASOURCE_USERNAME
+              value: root
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: Niharika@123
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              value: update
+
+---
+# ===================================================
+# Kubernetes Service - Spring Boot (NodePort)
+# ===================================================
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ecommerce-service
+spec:
+  selector:
+    app: ecommerce-app
+  type: NodePort
+  ports:
+    - port: 9090
+      targetPort: 9090
+      nodePort: 30090
+
+---
+# ===================================================
+# Kubernetes Deployment - MySQL
+# ===================================================
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: Niharika@123
+            - name: MYSQL_DATABASE
+              value: ecommerce
+
+---
+# ===================================================
+# Kubernetes Service - MySQL (ClusterIP)
+# ===================================================
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+spec:
+  selector:
+    app: mysql
+  ports:
+    - port: 3306
+      targetPort: 3306
