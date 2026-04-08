@@ -1,0 +1,46 @@
+public class Calculator {
+
+    // Addition
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    // Subtraction
+    public int subtract(int a, int b) {
+        return a - b;
+    }
+
+    // Multiplication
+    public int multiply(int a, int b) {
+        return a * b;
+    }
+}
+
+##calculator test
+
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+public class CalculatorTest {
+
+    // Test Case 1: Addition
+    @Test
+    void testAdd() {
+        Calculator calc = new Calculator();
+        assertEquals(5, calc.add(2, 3));
+    }
+
+    // Test Case 2: Subtraction
+    @Test
+    void testSubtract() {
+        Calculator calc = new Calculator();
+        assertEquals(2, calc.subtract(5, 3));
+    }
+
+    // Test Case 3: Multiplication
+    @Test
+    void testMultiply() {
+        Calculator calc = new Calculator();
+        assertEquals(6, calc.multiply(2, 3));
+    }
+}
