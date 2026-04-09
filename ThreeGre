@@ -1,0 +1,40 @@
+public class GreatestNumber {
+
+    public int findGreatest(int a, int b, int c) {
+        if (a >= b && a >= c) {
+            return a;
+        } else if (b >= a && b >= c) {
+            return b;
+        } else {
+            return c;
+        }
+    }
+}
+--------------------------------------
+//test cases
+
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+public class GreatestNumberTest {
+
+    GreatestNumber g = new GreatestNumber();
+
+    // ✅ SUCCESS CASE 1
+    @Test
+    void testCase1() {
+        assertEquals(10, g.findGreatest(10, 5, 3));
+    }
+
+    // ✅ SUCCESS CASE 2
+    @Test
+    void testCase2() {
+        assertEquals(20, g.findGreatest(10, 20, 15));
+    }
+
+    // ❌ FAILURE CASE (intentional wrong expectation)
+    @Test
+    void testFailureCase() {
+        assertEquals(15, g.findGreatest(10, 20, 15)); // WRONG expected
+    }
+}
