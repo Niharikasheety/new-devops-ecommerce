@@ -1,0 +1,33 @@
+public class Greeting {
+
+    public String sayHello(String name) {
+        if (name == null || name.isEmpty()) {
+            return "Hello Guest";
+        }
+        return "Hello " + name;
+    }
+}
+---------------------------------
+##test cases
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+public class GreetingTest {
+
+    Greeting g = new Greeting();
+
+    @Test
+    void testValidName() {
+        assertEquals("Hello John", g.sayHello("John")); // ✅
+    }
+
+    @Test
+    void testAnotherName() {
+        assertEquals("Hello Alice", g.sayHello("Alice")); // ✅
+    }
+
+    @Test
+    void testEmptyName() {
+        assertEquals("Hello Guest", g.sayHello("")); // ❌ case
+    }
+}
